@@ -1,0 +1,149 @@
+index.html
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Tí, Mis Flores Amarillas 🌻</title>
+    <style>
+        /* CSS: Estilos y Animaciones (El "Look" Impactante) */
+        :root {
+            --primary-yellow: #FFD700; /* Oro */
+            --soft-yellow: #FFFACD; /* Crema de limón */
+            --bg-color: #FFFDEB; /* Crema muy suave */
+            --text-color: #5d4037; /* Marrón suave */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Evita barras de desplazamiento */
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        /* Contenedor del Mensaje Central */
+        .container {
+            z-index: 10; /* Asegura que el texto esté SOBRE las flores */
+            background: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px); /* Efecto de cristal esmerilado */
+            border: 2px solid var(--primary-yellow);
+            max-width: 80%;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: var(--primary-yellow);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .heart {
+            color: #e25555;
+            font-size: 1.5em;
+        }
+
+        /* --- Animación de Flores Cayendo (JavaScript creará los elementos) --- */
+        .flower {
+            position: absolute;
+            top: -50px; /* Empieza fuera de la pantalla */
+            font-size: 2em;
+            user-select: none;
+            pointer-events: none; /* No interrumpen clics */
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg); /* Cae toda la altura y rota */
+                opacity: 0; /* Desaparece al llegar abajo */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mensaje Central -->
+    <div class="container">
+        <h1>¡Flores Amarillas para Tí! 🌻</h1>
+        <p>Porque te mereces toda la alegría, la luz y el amor que este día puede traer.</p>
+        <p>Gracias por brillar siempre. <span class="heart">❤️</span></p>
+    </div>
+
+    <!-- JavaScript: Generador de Lluvia de Flores -->
+    <script>
+        // Configuración
+        const totalFlowers = 50; // Número de flores cayendo a la vez
+        const symbols = ['🌻', '🌼', '✨', '💛', 'pétalo']; // Lo que puede caer
+
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+
+            // Seleccionar símbolo aleatorio
+            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            // Si es un pétalo, le damos estilo especial, si no, el emoji
+            if (symbol === 'pétalo') {
+                flower.style.width = '15px';
+                flower.style.height = '15px';
+                flower.style.backgroundColor = '#FFD700'; /* Amarillo Oro */
+                flower.style.borderRadius = '50% 0 50% 50%'; /* Forma de pétalo */
+                flower.style.opacity = '0.7';
+            } else {
+                flower.textContent = symbol;
+            }
+
+            // Posición horizontal aleatoria (0% a 100% del ancho)
+            flower.style.left = Math.random() * 100 + 'vw';
+
+            // Tamaño aleatorio (entre 1em y 2.5em)
+            const size = Math.random() * 1.5 + 1;
+            flower.style.fontSize = size + 'em';
+
+            // Duración de caída aleatoria (entre 5s y 15s) para variar velocidad
+            const duration = Math.random() * 10 + 5;
+            flower.style.animationDuration = duration + 's';
+
+            // Retraso de inicio aleatorio para que no caigan todas a la vez
+            flower.style.animationDelay = Math.random() * 5 + 's';
+
+            document.body.appendChild(flower);
+
+            // Eliminar el elemento después de que termine la animación para no saturar
+            setTimeout(() => {
+                flower.remove();
+            }, (duration + 5) * 1000); // Duración + delay
+        }
+
+        // Crear las flores iniciales
+        for (let i = 0; i < totalFlowers; i++) {
+            createFlower();
+        }
+
+        // Crear nuevas flores continuamente
+        setInterval(createFlower, 300); // Crea una flor nueva cada 300ms
+    </script>
+</body>
+</html>
